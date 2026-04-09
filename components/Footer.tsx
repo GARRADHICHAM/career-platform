@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -7,16 +8,19 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 bg-amber-400 rounded-lg flex items-center justify-center font-black text-slate-900">
-                E
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-white rounded-lg px-2 py-1">
+                <Image
+                  src="/logo.jpeg"
+                  alt="ENSAM Meknès"
+                  width={90}
+                  height={32}
+                  className="h-8 w-auto object-contain"
+                />
               </div>
-              <div>
-                <p className="text-white font-bold text-base">ENSAM Meknès</p>
-                <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase">
-                  Plateforme d&apos;Orientation
-                </p>
-              </div>
+              <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase leading-snug">
+                Plateforme<br />d&apos;Orientation
+              </p>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
               Aide les étudiants de l&apos;ENSAM Meknès à découvrir leur filière

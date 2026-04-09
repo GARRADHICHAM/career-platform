@@ -52,12 +52,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 bg-amber-400 rounded-lg flex items-center justify-center font-black text-slate-900 text-sm group-hover:bg-amber-300 transition-colors">
-              E
-            </div>
-            <div className="leading-none">
-              <p className="text-white font-bold text-sm tracking-wide">ENSAM</p>
-              <p className="text-amber-400 text-[10px] font-semibold tracking-widest uppercase">Meknès</p>
+            <div className="bg-white rounded-lg px-2 py-1">
+              <Image
+                src="/logo.jpeg"
+                alt="ENSAM Meknès"
+                width={80}
+                height={28}
+                className="h-7 w-auto object-contain"
+              />
             </div>
           </Link>
 

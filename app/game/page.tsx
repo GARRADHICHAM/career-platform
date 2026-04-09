@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { departments } from "@/lib/questions";
 import { departmentDetails } from "@/lib/departmentData";
@@ -28,13 +29,16 @@ function GameMap() {
       {/* Top bar */}
       <div className="bg-slate-900 border-b border-white/10 px-4 py-3 sticky top-0 z-40">
         <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-7 h-7 bg-amber-400 rounded-md flex items-center justify-center font-black text-slate-900 text-xs group-hover:bg-amber-300 transition-colors">
-              E
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="bg-white rounded-md px-1.5 py-0.5">
+              <Image
+                src="/logo.jpeg"
+                alt="ENSAM Meknès"
+                width={70}
+                height={24}
+                className="h-6 w-auto object-contain"
+              />
             </div>
-            <span className="text-white/70 text-sm font-medium hidden sm:block">
-              Test d&apos;Orientation
-            </span>
           </Link>
 
           {/* Overall progress */}
