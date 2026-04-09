@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import Image from "next/image";
 
 const navLinks = [
   { href: "/", label: "Accueil" },
@@ -53,14 +53,8 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="bg-white rounded-lg px-2 py-1">
-              <Image
-                src="/logo.png"
-                alt="ENSAM Meknès"
-                width={80}
-                height={28}
-                className="h-7 object-contain"
-                style={{ width: "auto" }}
-              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="ENSAM Meknès" className="h-7 w-auto object-contain" />
             </div>
           </Link>
 

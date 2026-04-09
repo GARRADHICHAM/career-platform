@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -10,14 +9,8 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <div className="bg-white rounded-lg px-2 py-1">
-                <Image
-                  src="/logo.png"
-                  alt="ENSAM Meknès"
-                  width={90}
-                  height={32}
-                  className="h-8 object-contain"
-                  style={{ width: "auto" }}
-                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="ENSAM Meknès" className="h-8 w-auto object-contain" />
               </div>
               <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase leading-snug">
                 Plateforme<br />d&apos;Orientation

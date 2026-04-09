@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { departments } from "@/lib/questions";
 import { departmentDetails } from "@/lib/departmentData";
@@ -31,14 +30,8 @@ function GameMap() {
         <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2.5">
             <div className="bg-white rounded-md px-1.5 py-0.5">
-              <Image
-                src="/logo.png"
-                alt="ENSAM Meknès"
-                width={70}
-                height={24}
-                className="h-6 object-contain"
-                style={{ width: "auto" }}
-              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="ENSAM Meknès" className="h-6 w-auto object-contain" />
             </div>
           </Link>
 
