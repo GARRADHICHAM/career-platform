@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getOrCreateSession, saveResultsToFirebase } from "@/lib/gameSession";
+import Link from "next/link";
+import { getOrCreateSession, saveResultsToFirebase, clearSession } from "@/lib/gameSession";
 import { departments } from "@/lib/questions";
-import { DepartmentScore, GameSession } from "@/types";
+import { departmentDetails } from "@/lib/departmentData";
+import { GameSession } from "@/types";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import UserMenu from "@/components/UserMenu";
 
@@ -20,14 +22,22 @@ interface RankedDept {
   percentage: number;
 }
 
+const medals = ["🥇", "🥈", "🥉"];
+const medalColors = [
+  "border-amber-400/50 bg-amber-400/5",
+  "border-slate-400/40 bg-slate-400/5",
+  "border-orange-400/40 bg-orange-400/5",
+];
+const medalBarColors = ["bg-amber-400", "bg-slate-400", "bg-orange-400"];
+
 function ResultsDashboard() {
   const router = useRouter();
   const [session, setSession] = useState<GameSession | null>(null);
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    const s = getOrCreateSession();
-    setSession(s);
+    setSession(getOrCreateSession());
   }, []);
 
   const ranked: RankedDept[] = departments
@@ -50,180 +60,277 @@ function ResultsDashboard() {
 
   const top3 = ranked.slice(0, 3);
   const rest = ranked.slice(3);
+  const completedCount = ranked.length;
+  const totalCount = departments.length;
 
   async function handleSave() {
-    if (!session) return;
+    if (!session || saving) return;
+    setSaving(true);
     await saveResultsToFirebase(session);
     setSaved(true);
+    setSaving(false);
   }
 
-  function getMedal(index: number) {
-    if (index === 0) return "🥇";
-    if (index === 1) return "🥈";
-    if (index === 2) return "🥉";
-    return "";
+  function handleRestart() {
+    clearSession();
+    router.push("/game");
   }
 
+  /* ── EMPTY STATE ── */
   if (!session || ranked.length === 0) {
     return (
-      <main className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-        <div className="text-center max-w-sm">
-          <div className="text-5xl mb-4">📭</div>
-          <h2 className="text-xl font-bold text-gray-700 mb-2">No results yet</h2>
-          <p className="text-gray-500 text-sm mb-6">
-            You need to complete at least one quiz before seeing results.
-          </p>
-          <button
-            onClick={() => router.push("/game")}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-indigo-500 transition-all"
-          >
-            Go to Department Map
-          </button>
+      <main className="min-h-screen bg-slate-950 flex flex-col">
+        <div className="bg-slate-900 border-b border-white/10 px-4 py-3">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <Link href="/game" className="text-white/40 hover:text-white text-sm transition-colors">
+              ← Retour
+            </Link>
+            <UserMenu />
+          </div>
+        </div>
+        <div className="flex-1 flex items-center justify-center p-6">
+          <div className="text-center max-w-sm">
+            <div className="text-6xl mb-5">📭</div>
+            <h2 className="text-xl font-extrabold text-white mb-2">Aucun résultat</h2>
+            <p className="text-white/40 text-sm mb-8">
+              Tu dois compléter au moins une filière avant de voir tes résultats.
+            </p>
+            <Link
+              href="/game"
+              className="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3 rounded-xl text-sm transition-all"
+            >
+              Aller à la carte des filières
+            </Link>
+          </div>
         </div>
       </main>
     );
   }
 
-  const completedCount = ranked.length;
-  const totalCount = departments.length;
+  const overallScore = Math.round(
+    ranked.reduce((acc, d) => acc + d.percentage, 0) / ranked.length
+  );
 
   return (
-    <main className="min-h-screen bg-gray-50 pb-12">
-      {/* Hero */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 px-6">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <div className="text-center flex-1">
-            <div className="text-4xl mb-2">🏆</div>
-            <h1 className="text-2xl font-extrabold mb-1">Your Results</h1>
-            <p className="text-indigo-200 text-sm">
-              {completedCount} of {totalCount} departments completed
-            </p>
-          </div>
+    <main className="min-h-screen bg-slate-950 pb-16">
+
+      {/* Top bar */}
+      <div className="bg-slate-900 border-b border-white/10 px-4 py-3 sticky top-0 z-40">
+        <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
+          <Link href="/game" className="text-white/40 hover:text-white text-sm transition-colors flex items-center gap-1.5">
+            ← Carte
+          </Link>
+          <span className="text-white/50 text-sm font-medium hidden sm:block">Mes Résultats</span>
           <UserMenu />
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 mt-8 space-y-6">
+      {/* Hero */}
+      <div className="bg-slate-900 border-b border-white/10 px-4 pt-12 pb-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="text-5xl mb-4">🏆</div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
+            Tes résultats d&apos;orientation
+          </h1>
+          <p className="text-white/40 text-sm mb-6">
+            {completedCount} filière{completedCount > 1 ? "s" : ""} complétée{completedCount > 1 ? "s" : ""} sur {totalCount}
+            {completedCount < totalCount && ` — complète les ${totalCount - completedCount} restantes pour plus de précision`}
+          </p>
 
-        {/* Top 3 Recommendations */}
+          {/* Summary pills */}
+          <div className="flex flex-wrap justify-center gap-3">
+            <div className="bg-white/5 border border-white/10 rounded-xl px-5 py-3">
+              <p className="text-2xl font-extrabold text-amber-400">{overallScore}%</p>
+              <p className="text-white/30 text-xs">score moyen</p>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl px-5 py-3">
+              <p className="text-2xl font-extrabold text-white">{completedCount}/{totalCount}</p>
+              <p className="text-white/30 text-xs">filières testées</p>
+            </div>
+            {top3[0] && (
+              <div className="bg-amber-400/10 border border-amber-400/30 rounded-xl px-5 py-3">
+                <p className="text-lg font-extrabold text-amber-400">
+                  {top3[0].icon} {top3[0].shortName}
+                </p>
+                <p className="text-white/30 text-xs">meilleure affinité</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 mt-10 space-y-8">
+
+        {/* TOP 3 */}
         {top3.length > 0 && (
           <section>
-            <h2 className="text-lg font-bold text-gray-700 mb-4">
-              ⭐ Your Top {top3.length} Recommendations
+            <h2 className="text-white/50 text-xs font-bold uppercase tracking-widest mb-4">
+              ⭐ Recommandations — Top {top3.length}
             </h2>
             <div className="space-y-3">
-              {top3.map((dept, i) => (
-                <div
-                  key={dept.id}
-                  className={`border-2 rounded-2xl p-5 ${dept.bgColor} ${i === 0 ? "shadow-md" : ""}`}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-3xl">{getMedal(i)}</span>
-                    <span className="text-2xl">{dept.icon}</span>
-                    <div>
-                      <h3 className={`font-bold text-sm ${dept.color}`}>{dept.name}</h3>
-                      <p className="text-gray-500 text-xs">Rank #{i + 1}</p>
+              {top3.map((dept, i) => {
+                const detail = departmentDetails[dept.id];
+                return (
+                  <div
+                    key={dept.id}
+                    className={`border rounded-2xl p-5 transition-all ${medalColors[i]} ${i === 0 ? "shadow-lg shadow-amber-400/10" : ""}`}
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-3xl">{medals[i]}</span>
+                      <div className="text-3xl">{dept.icon}</div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-white font-extrabold text-base">{dept.name}</h3>
+                        {detail && (
+                          <p className="text-white/40 text-xs italic">{detail.tagline}</p>
+                        )}
+                      </div>
+                      <div className="text-right shrink-0">
+                        <p className={`text-3xl font-extrabold ${i === 0 ? "text-amber-400" : "text-white"}`}>
+                          {dept.percentage}%
+                        </p>
+                        <p className="text-white/30 text-xs">{dept.score}/{dept.total} Oui</p>
+                      </div>
                     </div>
-                    <div className="ml-auto text-right">
-                      <p className={`text-2xl font-extrabold ${dept.color}`}>{dept.percentage}%</p>
-                      <p className="text-gray-500 text-xs">{dept.score}/{dept.total} Yes</p>
+
+                    {/* Progress bar */}
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-4">
+                      <div
+                        className={`h-full rounded-full transition-all ${medalBarColors[i]}`}
+                        style={{ width: `${dept.percentage}%` }}
+                      />
+                    </div>
+
+                    {/* Career pills */}
+                    {detail && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {detail.careers.slice(0, 3).map((c) => (
+                          <span
+                            key={c.title}
+                            className="bg-white/5 border border-white/10 text-white/50 text-xs px-2.5 py-1 rounded-full"
+                          >
+                            {c.title}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex gap-3">
+                      <Link
+                        href={`/departments/${dept.id}`}
+                        className="flex-1 text-center py-2.5 rounded-xl border border-white/10 text-white/60 text-xs font-semibold hover:bg-white/5 hover:text-white transition-all"
+                      >
+                        Découvrir la filière ↗
+                      </Link>
+                      <Link
+                        href={`/game/${dept.id}`}
+                        className="flex-1 text-center py-2.5 rounded-xl border border-white/10 text-white/60 text-xs font-semibold hover:bg-white/5 hover:text-white transition-all"
+                      >
+                        🔄 Refaire le quiz
+                      </Link>
                     </div>
                   </div>
-                  <div className="h-2.5 bg-white/50 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-current rounded-full transition-all"
-                      style={{ width: `${dept.percentage}%`, color: "inherit" }}
-                    />
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* ALL SCORES bar chart */}
+        <section className="bg-slate-900 border border-white/10 rounded-2xl p-6">
+          <h2 className="text-white/50 text-xs font-bold uppercase tracking-widest mb-5">
+            📊 Toutes les filières
+          </h2>
+          <div className="space-y-4">
+            {ranked.map((dept, i) => (
+              <div key={dept.id} className="flex items-center gap-3">
+                <span className="text-xl w-7 shrink-0">{dept.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-white/70 text-sm font-medium truncate">{dept.shortName}</span>
+                    <span className={`text-sm font-extrabold shrink-0 ml-3 ${i < 3 ? "text-amber-400" : "text-white/50"}`}>
+                      {dept.percentage}%
+                    </span>
                   </div>
-                  {/* progress bar with fixed color */}
-                  <div className="h-2.5 -mt-2.5 bg-transparent rounded-full overflow-hidden relative">
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all ${
-                        i === 0
-                          ? "bg-yellow-500"
-                          : i === 1
-                          ? "bg-gray-400"
-                          : "bg-orange-400"
-                      }`}
+                      className={`h-full rounded-full transition-all ${i < 3 ? "bg-amber-400" : "bg-white/20"}`}
                       style={{ width: `${dept.percentage}%` }}
                     />
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+                {i < 3 && (
+                  <span className="text-sm shrink-0">{medals[i]}</span>
+                )}
+              </div>
+            ))}
 
-        {/* All Scores */}
-        {rest.length > 0 && (
-          <section>
-            <h2 className="text-lg font-bold text-gray-700 mb-3">Other Scores</h2>
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 divide-y divide-gray-50">
-              {rest.map((dept) => (
-                <div key={dept.id} className="flex items-center gap-3 px-5 py-4">
-                  <span className="text-xl">{dept.icon}</span>
+            {/* Not yet tested */}
+            {departments
+              .filter((d) => !ranked.find((r) => r.id === d.id))
+              .map((dept) => (
+                <div key={dept.id} className="flex items-center gap-3 opacity-30">
+                  <span className="text-xl w-7 shrink-0">{dept.icon}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-700 truncate">{dept.shortName}</p>
-                    <div className="h-1.5 bg-gray-100 rounded-full mt-1 overflow-hidden">
-                      <div
-                        className="h-full bg-indigo-400 rounded-full"
-                        style={{ width: `${dept.percentage}%` }}
-                      />
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="text-white/50 text-sm truncate">{dept.shortName}</span>
+                      <span className="text-white/30 text-xs shrink-0 ml-3">Non testé</span>
                     </div>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className="text-sm font-bold text-gray-700">{dept.percentage}%</p>
-                    <p className="text-xs text-gray-400">{dept.score}/{dept.total}</p>
+                    <div className="h-2 bg-white/5 rounded-full" />
                   </div>
                 </div>
               ))}
-            </div>
-          </section>
-        )}
+          </div>
+        </section>
 
-        {/* Incomplete departments notice */}
+        {/* Incomplete notice */}
         {completedCount < totalCount && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-sm text-amber-700">
-            <p className="font-semibold mb-1">💡 Tip</p>
-            <p>
-              You haven&apos;t completed all departments yet. Complete the remaining{" "}
-              <strong>{totalCount - completedCount}</strong> to get more accurate recommendations.
-            </p>
-            <button
-              onClick={() => router.push("/game")}
-              className="mt-3 text-amber-800 font-semibold underline"
-            >
-              Continue quiz →
-            </button>
+          <div className="bg-amber-400/10 border border-amber-400/20 rounded-2xl p-5">
+            <div className="flex items-start gap-3">
+              <span className="text-xl">💡</span>
+              <div>
+                <p className="text-amber-400 font-semibold text-sm mb-1">
+                  Résultats partiels
+                </p>
+                <p className="text-white/50 text-xs leading-relaxed">
+                  Tu n&apos;as pas encore testé toutes les filières.
+                  Complète les <strong className="text-white/70">{totalCount - completedCount}</strong> filières
+                  restantes pour obtenir une recommandation plus précise.
+                </p>
+                <Link
+                  href="/game"
+                  className="inline-block mt-3 text-amber-400 text-xs font-semibold hover:underline"
+                >
+                  Continuer le test →
+                </Link>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <button
             onClick={() => router.push("/game")}
-            className="flex-1 py-3 rounded-2xl border-2 border-gray-200 text-gray-600 font-semibold hover:bg-gray-100 transition-all text-sm"
+            className="py-3.5 rounded-xl border border-white/10 text-white/60 font-semibold text-sm hover:bg-white/5 hover:text-white transition-all"
           >
-            ← Back to Map
+            ← Carte des filières
           </button>
           <button
             onClick={handleSave}
-            disabled={saved}
-            className={`flex-1 py-3 rounded-2xl font-semibold text-sm transition-all ${
+            disabled={saved || saving}
+            className={`py-3.5 rounded-xl font-semibold text-sm transition-all ${
               saved
-                ? "bg-green-100 text-green-600 cursor-default"
-                : "bg-indigo-600 text-white hover:bg-indigo-500 hover:shadow-md"
+                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 cursor-default"
+                : "bg-slate-800 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white"
             }`}
           >
-            {saved ? "✓ Saved to Firebase" : "💾 Save Results"}
+            {saving ? "Enregistrement..." : saved ? "✓ Sauvegardé" : "💾 Sauvegarder"}
           </button>
           <button
-            onClick={() => {
-              router.push("/");
-            }}
-            className="flex-1 py-3 rounded-2xl bg-gray-800 text-white font-semibold text-sm hover:bg-gray-700 transition-all"
+            onClick={handleRestart}
+            className="py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-sm transition-all hover:shadow-lg hover:shadow-amber-400/20"
           >
-            🔄 Restart
+            🔄 Recommencer
           </button>
         </div>
       </div>

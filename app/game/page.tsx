@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { departments } from "@/lib/questions";
+import { departmentDetails } from "@/lib/departmentData";
 import { getOrCreateSession } from "@/lib/gameSession";
 import { GameSession } from "@/types";
-import DepartmentCard from "@/components/DepartmentCard";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import UserMenu from "@/components/UserMenu";
 
@@ -19,66 +20,145 @@ function GameMap() {
 
   const completed = session?.completedDepartments ?? [];
   const allDone = completed.length === departments.length;
+  const pct = Math.round((completed.length / departments.length) * 100);
 
   return (
-    <main className="min-h-screen bg-gray-50 pb-10">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6 px-6 shadow-md">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <h1 className="text-2xl font-bold">Choose a Department</h1>
-              <p className="text-indigo-200 text-sm mt-0.5">
-                {completed.length} / {departments.length} completed
-              </p>
+    <main className="min-h-screen bg-slate-950">
+
+      {/* Top bar */}
+      <div className="bg-slate-900 border-b border-white/10 px-4 py-3 sticky top-0 z-40">
+        <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-7 h-7 bg-amber-400 rounded-md flex items-center justify-center font-black text-slate-900 text-xs group-hover:bg-amber-300 transition-colors">
+              E
             </div>
-            <UserMenu />
+            <span className="text-white/70 text-sm font-medium hidden sm:block">
+              Test d&apos;Orientation
+            </span>
+          </Link>
+
+          {/* Overall progress */}
+          <div className="flex-1 max-w-xs">
+            <div className="flex justify-between text-xs text-white/40 mb-1">
+              <span>{completed.length} / {departments.length} filières</span>
+              <span>{pct}%</span>
+            </div>
+            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-amber-400 rounded-full transition-all duration-700"
+                style={{ width: `${pct}%` }}
+              />
+            </div>
           </div>
-          <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-white rounded-full transition-all duration-500"
-              style={{ width: `${(completed.length / departments.length) * 100}%` }}
-            />
-          </div>
+
+          <UserMenu />
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="max-w-4xl mx-auto px-4 mt-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {/* Hero */}
+      <div className="max-w-5xl mx-auto px-4 pt-12 pb-8 text-center">
+        <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/20 rounded-full px-4 py-1.5 mb-5">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+          <span className="text-amber-400 text-xs font-semibold tracking-wide uppercase">
+            Test d&apos;orientation ENSAM Meknès
+          </span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">
+          Choisis une filière à explorer
+        </h1>
+        <p className="text-white/40 text-sm max-w-md mx-auto">
+          Réponds à 10 questions par filière pour mesurer ton niveau d&apos;affinité.
+          Plus tu en complètes, plus ta recommandation sera précise.
+        </p>
+      </div>
+
+      {/* Department grid */}
+      <div className="max-w-5xl mx-auto px-4 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {departments.map((dept) => {
-            const deptScore = session?.scores[dept.id];
+            const score = session?.scores[dept.id];
+            const isDone = completed.includes(dept.id);
+            const detail = departmentDetails[dept.id];
+
             return (
-              <DepartmentCard
+              <Link
                 key={dept.id}
-                department={dept}
-                score={deptScore?.score}
-                total={deptScore?.total}
-                completed={completed.includes(dept.id)}
-              />
+                href={`/game/${dept.id}`}
+                className={`group relative flex flex-col rounded-2xl border transition-all duration-200 hover:scale-[1.02] hover:shadow-xl overflow-hidden ${
+                  isDone
+                    ? "bg-slate-800 border-amber-400/40 hover:border-amber-400"
+                    : "bg-slate-800/50 border-white/10 hover:border-white/30 hover:bg-slate-800"
+                }`}
+              >
+                {/* Completed badge */}
+                {isDone && (
+                  <div className="absolute top-3 right-3 bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide">
+                    ✓ Fait
+                  </div>
+                )}
+
+                <div className="p-5 flex-1">
+                  <div className="text-3xl mb-3">{dept.icon}</div>
+                  <h3 className="text-white font-bold text-sm mb-1 leading-snug">
+                    {dept.shortName}
+                  </h3>
+                  {detail && (
+                    <p className="text-white/40 text-xs leading-snug italic">
+                      {detail.tagline}
+                    </p>
+                  )}
+                </div>
+
+                {/* Score bar if done */}
+                {isDone && score ? (
+                  <div className="px-5 pb-5">
+                    <div className="flex justify-between text-xs mb-1.5">
+                      <span className="text-white/40">Affinité</span>
+                      <span className="text-amber-400 font-bold">{score.percentage}%</span>
+                    </div>
+                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-amber-400 rounded-full"
+                        style={{ width: `${score.percentage}%` }}
+                      />
+                    </div>
+                    <p className="text-white/30 text-[10px] mt-1.5">
+                      {score.score}/{score.total} réponses positives
+                    </p>
+                  </div>
+                ) : (
+                  <div className="px-5 pb-5">
+                    <span className="text-white/30 text-xs font-semibold group-hover:text-amber-400 transition-colors">
+                      Commencer le quiz →
+                    </span>
+                  </div>
+                )}
+              </Link>
             );
           })}
         </div>
 
-        <div className="mt-8 text-center">
+        {/* CTA */}
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
             onClick={() => router.push("/results")}
             disabled={completed.length === 0}
-            className={`px-8 py-3 rounded-2xl font-bold text-base transition-all duration-200 ${
+            className={`px-8 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 ${
               completed.length > 0
-                ? "bg-indigo-600 hover:bg-indigo-500 text-white hover:shadow-lg hover:scale-105"
-                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                ? "bg-amber-400 hover:bg-amber-300 text-slate-900 hover:shadow-lg hover:shadow-amber-400/25 hover:scale-105"
+                : "bg-white/5 text-white/20 cursor-not-allowed"
             }`}
           >
             {allDone
-              ? "🏆 See My Results"
+              ? "🏆 Voir mes résultats finaux"
               : completed.length > 0
-              ? "📊 See Partial Results"
-              : "Complete at least 1 quiz first"}
+              ? `📊 Voir mes résultats (${completed.length} filière${completed.length > 1 ? "s" : ""})`
+              : "Complète au moins une filière"}
           </button>
+
           {completed.length > 0 && !allDone && (
-            <p className="text-gray-400 text-xs mt-2">
-              Complete more quizzes for better recommendations
+            <p className="text-white/30 text-xs">
+              {departments.length - completed.length} filière{departments.length - completed.length > 1 ? "s" : ""} restante{departments.length - completed.length > 1 ? "s" : ""} — continue pour une meilleure recommandation
             </p>
           )}
         </div>
