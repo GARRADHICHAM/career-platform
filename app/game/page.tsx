@@ -6,8 +6,10 @@ import { departments } from "@/lib/questions";
 import { getOrCreateSession } from "@/lib/gameSession";
 import { GameSession } from "@/types";
 import DepartmentCard from "@/components/DepartmentCard";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import UserMenu from "@/components/UserMenu";
 
-export default function GamePage() {
+function GameMap() {
   const router = useRouter();
   const [session, setSession] = useState<GameSession | null>(null);
 
@@ -21,13 +23,18 @@ export default function GamePage() {
   return (
     <main className="min-h-screen bg-gray-50 pb-10">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 px-6 shadow-md">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6 px-6 shadow-md">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl font-bold">Choose a Department</h1>
-          <p className="text-indigo-200 text-sm mt-1">
-            Click on a department to start its quiz • {completed.length} / {departments.length} completed
-          </p>
-          <div className="mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h1 className="text-2xl font-bold">Choose a Department</h1>
+              <p className="text-indigo-200 text-sm mt-0.5">
+                {completed.length} / {departments.length} completed
+              </p>
+            </div>
+            <UserMenu />
+          </div>
+          <div className="h-2 bg-white/20 rounded-full overflow-hidden">
             <div
               className="h-full bg-white rounded-full transition-all duration-500"
               style={{ width: `${(completed.length / departments.length) * 100}%` }}
@@ -53,7 +60,6 @@ export default function GamePage() {
           })}
         </div>
 
-        {/* Results CTA */}
         <div className="mt-8 text-center">
           <button
             onClick={() => router.push("/results")}
@@ -64,7 +70,11 @@ export default function GamePage() {
                 : "bg-gray-200 text-gray-400 cursor-not-allowed"
             }`}
           >
-            {allDone ? "🏆 See My Results" : completed.length > 0 ? "📊 See Partial Results" : "Complete at least 1 quiz first"}
+            {allDone
+              ? "🏆 See My Results"
+              : completed.length > 0
+              ? "📊 See Partial Results"
+              : "Complete at least 1 quiz first"}
           </button>
           {completed.length > 0 && !allDone && (
             <p className="text-gray-400 text-xs mt-2">
@@ -74,5 +84,13 @@ export default function GamePage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function GamePage() {
+  return (
+    <ProtectedRoute>
+      <GameMap />
+    </ProtectedRoute>
   );
 }

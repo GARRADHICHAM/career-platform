@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { getOrCreateSession, saveResultsToFirebase } from "@/lib/gameSession";
 import { departments } from "@/lib/questions";
 import { DepartmentScore, GameSession } from "@/types";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import UserMenu from "@/components/UserMenu";
 
 interface RankedDept {
   id: string;
@@ -18,7 +20,7 @@ interface RankedDept {
   percentage: number;
 }
 
-export default function ResultsPage() {
+function ResultsDashboard() {
   const router = useRouter();
   const [session, setSession] = useState<GameSession | null>(null);
   const [saved, setSaved] = useState(false);
@@ -88,12 +90,17 @@ export default function ResultsPage() {
   return (
     <main className="min-h-screen bg-gray-50 pb-12">
       {/* Hero */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-10 px-6 text-center">
-        <div className="text-5xl mb-3">🏆</div>
-        <h1 className="text-2xl font-extrabold mb-1">Your Results</h1>
-        <p className="text-indigo-200 text-sm">
-          {completedCount} of {totalCount} departments completed
-        </p>
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 px-6">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
+          <div className="text-center flex-1">
+            <div className="text-4xl mb-2">🏆</div>
+            <h1 className="text-2xl font-extrabold mb-1">Your Results</h1>
+            <p className="text-indigo-200 text-sm">
+              {completedCount} of {totalCount} departments completed
+            </p>
+          </div>
+          <UserMenu />
+        </div>
       </div>
 
       <div className="max-w-2xl mx-auto px-4 mt-8 space-y-6">
@@ -221,5 +228,13 @@ export default function ResultsPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function ResultsPage() {
+  return (
+    <ProtectedRoute>
+      <ResultsDashboard />
+    </ProtectedRoute>
   );
 }

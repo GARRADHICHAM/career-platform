@@ -1,14 +1,30 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import { clearSession } from "@/lib/gameSession";
 
 export default function Home() {
+  const { user, loading } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) { router.replace("/login"); return; }
+  }, [user, loading, router]);
 
   function handleStart() {
     clearSession();
     router.push("/game");
+  }
+
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 to-purple-900">
+        <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -20,7 +36,7 @@ export default function Home() {
           <span className="block text-indigo-300">Web Game</span>
         </h1>
         <p className="text-indigo-200 text-base mb-2">
-          ENSAM — Interactive Department Guide
+          Welcome, {user.displayName ?? user.email} 👋
         </p>
         <p className="text-white/70 text-sm mb-8 leading-relaxed">
           Answer readiness questions across 8 engineering departments and discover
