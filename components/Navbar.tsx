@@ -54,7 +54,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="bg-white rounded-lg px-2 py-1">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="ENSAM Meknès"
                 width={80}
                 height={28}

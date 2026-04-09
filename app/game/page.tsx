@@ -32,7 +32,7 @@ function GameMap() {
           <Link href="/" className="flex items-center gap-2.5">
             <div className="bg-white rounded-md px-1.5 py-0.5">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="ENSAM Meknès"
                 width={70}
                 height={24}

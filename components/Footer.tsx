@@ -11,7 +11,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="bg-white rounded-lg px-2 py-1">
                 <Image
-                  src="/logo.jpeg"
+                  src="/logo.png"
                   alt="ENSAM Meknès"
                   width={90}
                   height={32}
