@@ -36,7 +36,8 @@ function GameMap() {
                 alt="ENSAM Meknès"
                 width={70}
                 height={24}
-                className="h-6 w-auto object-contain"
+                className="h-6 object-contain"
+                style={{ width: "auto" }}
               />
             </div>
           </Link>

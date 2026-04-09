@@ -58,7 +58,8 @@ export default function Navbar() {
                 alt="ENSAM Meknès"
                 width={80}
                 height={28}
-                className="h-7 w-auto object-contain"
+                className="h-7 object-contain"
+                style={{ width: "auto" }}
               />
             </div>
           </Link>

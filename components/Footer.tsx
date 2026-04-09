@@ -15,7 +15,8 @@ export default function Footer() {
                   alt="ENSAM Meknès"
                   width={90}
                   height={32}
-                  className="h-8 w-auto object-contain"
+                  className="h-8 object-contain"
+                  style={{ width: "auto" }}
                 />
               </div>
               <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase leading-snug">
