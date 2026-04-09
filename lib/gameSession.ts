@@ -1,40 +1,40 @@
 import { GameSession, DepartmentScore } from "@/types";
 import { db } from "./firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
-const SESSION_KEY = "career_game_session";
+function sessionKey(userId: string) {
+  return `career_game_session_${userId}`;
+}
 
-export function getOrCreateSession(): GameSession {
-  if (typeof window === "undefined") {
-    return createNewSession();
-  }
-  const stored = localStorage.getItem(SESSION_KEY);
-  if (stored) {
-    return JSON.parse(stored);
-  }
-  const session = createNewSession();
-  saveSession(session);
+export function getOrCreateSession(userId: string): GameSession {
+  if (typeof window === "undefined") return createNewSession(userId);
+  const stored = localStorage.getItem(sessionKey(userId));
+  if (stored) return JSON.parse(stored);
+  const session = createNewSession(userId);
+  saveSession(session, userId);
   return session;
 }
 
-function createNewSession(): GameSession {
+function createNewSession(userId: string): GameSession {
   return {
     sessionId: crypto.randomUUID(),
     scores: {},
     completedDepartments: [],
     startedAt: Date.now(),
+    userId,
   };
 }
 
-export function saveSession(session: GameSession): void {
+export function saveSession(session: GameSession, userId: string): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  localStorage.setItem(sessionKey(userId), JSON.stringify(session));
 }
 
 export function saveDepartmentScore(
   session: GameSession,
   departmentId: string,
-  answers: boolean[]
+  answers: boolean[],
+  userId: string
 ): GameSession {
   const score = answers.filter(Boolean).length;
   const total = answers.length;
@@ -45,7 +45,6 @@ export function saveDepartmentScore(
     percentage: Math.round((score / total) * 100),
     answers,
   };
-
   const updated: GameSession = {
     ...session,
     scores: { ...session.scores, [departmentId]: departmentScore },
@@ -53,22 +52,22 @@ export function saveDepartmentScore(
       new Set([...session.completedDepartments, departmentId])
     ),
   };
-  saveSession(updated);
+  saveSession(updated, userId);
   return updated;
 }
 
-export function clearSession(): void {
+export function clearSession(userId: string): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(sessionKey(userId));
 }
 
-export async function saveResultsToFirebase(session: GameSession): Promise<void> {
+export async function saveResultsToFirebase(
+  session: GameSession,
+  userId: string
+): Promise<void> {
   try {
-    const sessionRef = doc(db, "sessions", session.sessionId);
-    await setDoc(sessionRef, {
-      ...session,
-      completedAt: Date.now(),
-    });
+    const ref = doc(db, "users", userId, "sessions", session.sessionId);
+    await setDoc(ref, { ...session, userId, completedAt: Date.now() });
   } catch (error) {
     console.error("Failed to save to Firebase:", error);
   }

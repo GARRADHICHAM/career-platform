@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="bg-white rounded-lg px-2 py-1">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="ENSAM Meknès" className="h-8 w-auto object-contain" />
+              <img src="/logo.png" alt="ENSAM Meknès" className="h-10 w-auto object-contain" />
               </div>
               <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase leading-snug">
                 Plateforme<br />d&apos;Orientation

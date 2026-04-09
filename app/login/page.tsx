@@ -16,14 +16,14 @@ export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && user) router.replace("/game");
+    if (!loading && user) router.replace("/");
   }, [user, loading, router]);
 
   async function handleGoogle() {
     setError("");
     try {
       await signInWithGoogle();
-      router.replace("/game");
+      router.replace("/");
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Google sign-in failed.");
     }
@@ -40,7 +40,7 @@ export default function LoginPage() {
       } else {
         await signInWithEmail(email, password);
       }
-      router.replace("/game");
+      router.replace("/");
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Authentication failed.";
       if (msg.includes("user-not-found") || msg.includes("wrong-password") || msg.includes("invalid-credential")) {

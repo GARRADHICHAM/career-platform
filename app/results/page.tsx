@@ -9,6 +9,7 @@ import { departmentDetails } from "@/lib/departmentData";
 import { GameSession } from "@/types";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import UserMenu from "@/components/UserMenu";
+import { useAuth } from "@/context/AuthContext";
 
 interface RankedDept {
   id: string;
@@ -32,13 +33,14 @@ const medalBarColors = ["bg-amber-400", "bg-slate-400", "bg-orange-400"];
 
 function ResultsDashboard() {
   const router = useRouter();
+  const { user } = useAuth();
   const [session, setSession] = useState<GameSession | null>(null);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    setSession(getOrCreateSession());
-  }, []);
+    if (user) setSession(getOrCreateSession(user.uid));
+  }, [user]);
 
   const ranked: RankedDept[] = departments
     .filter((d) => session?.scores[d.id])
@@ -64,15 +66,15 @@ function ResultsDashboard() {
   const totalCount = departments.length;
 
   async function handleSave() {
-    if (!session || saving) return;
+    if (!session || saving || !user) return;
     setSaving(true);
-    await saveResultsToFirebase(session);
+    await saveResultsToFirebase(session, user.uid);
     setSaved(true);
     setSaving(false);
   }
 
   function handleRestart() {
-    clearSession();
+    if (user) clearSession(user.uid);
     router.push("/game");
   }
 

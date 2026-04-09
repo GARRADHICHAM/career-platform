@@ -9,14 +9,16 @@ import { getOrCreateSession } from "@/lib/gameSession";
 import { GameSession } from "@/types";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import UserMenu from "@/components/UserMenu";
+import { useAuth } from "@/context/AuthContext";
 
 function GameMap() {
   const router = useRouter();
+  const { user } = useAuth();
   const [session, setSession] = useState<GameSession | null>(null);
 
   useEffect(() => {
-    setSession(getOrCreateSession());
-  }, []);
+    if (user) setSession(getOrCreateSession(user.uid));
+  }, [user]);
 
   const completed = session?.completedDepartments ?? [];
   const allDone = completed.length === departments.length;
@@ -31,7 +33,7 @@ function GameMap() {
           <Link href="/" className="flex items-center gap-2.5">
             <div className="bg-white rounded-md px-1.5 py-0.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="ENSAM Meknès" className="h-6 w-auto object-contain" />
+              <img src="/logo.png" alt="ENSAM Meknès" className="h-8 w-auto object-contain" />
             </div>
           </Link>
 

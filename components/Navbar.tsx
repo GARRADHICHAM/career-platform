@@ -54,7 +54,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="bg-white rounded-lg px-2 py-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="ENSAM Meknès" className="h-7 w-auto object-contain" />
+              <img src="/logo.png" alt="ENSAM Meknès" className="h-10 w-auto object-contain" />
             </div>
           </Link>
 

@@ -7,6 +7,7 @@ import { departments } from "@/lib/questions";
 import { departmentDetails } from "@/lib/departmentData";
 import { getOrCreateSession, saveDepartmentScore } from "@/lib/gameSession";
 import { GameSession } from "@/types";
+import { useAuth } from "@/context/AuthContext";
 
 type Phase = "intro" | "quiz" | "done";
 
@@ -17,6 +18,7 @@ export default function DepartmentQuizPage() {
   const department = departments.find((d) => d.id === departmentId);
   const detail = departmentDetails[departmentId];
 
+  const { user } = useAuth();
   const [session, setSession] = useState<GameSession | null>(null);
   const [phase, setPhase] = useState<Phase>("intro");
   const [currentQ, setCurrentQ] = useState(0);
@@ -24,8 +26,8 @@ export default function DepartmentQuizPage() {
   const [selected, setSelected] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setSession(getOrCreateSession());
-  }, []);
+    if (user) setSession(getOrCreateSession(user.uid));
+  }, [user]);
 
   if (!department) {
     return (
@@ -51,7 +53,7 @@ export default function DepartmentQuizPage() {
     setTimeout(() => {
       const newAnswers = [...answers, answer];
       if (currentQ + 1 >= totalQ) {
-        const updatedSession = saveDepartmentScore(session!, department!.id, newAnswers);
+        const updatedSession = saveDepartmentScore(session!, department!.id, newAnswers, user!.uid);
         setSession(updatedSession);
         setAnswers(newAnswers);
         setPhase("done");

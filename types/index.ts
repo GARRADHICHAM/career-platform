@@ -24,6 +24,7 @@ export interface DepartmentScore {
 
 export interface GameSession {
   sessionId: string;
+  userId: string;
   scores: Record<string, DepartmentScore>;
   completedDepartments: string[];
   startedAt: number;
