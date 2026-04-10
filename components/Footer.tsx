@@ -13,29 +13,29 @@ export default function Footer() {
               <img src="/logo.png" alt="ENSAM Meknès" className="h-10 w-auto object-contain" />
               </div>
               <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase leading-snug">
-                Plateforme<br />d&apos;Orientation
+                Orientation<br />Platform
               </p>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
-              Aide les étudiants de l&apos;ENSAM Meknès à découvrir leur filière
-              idéale et à construire leur projet professionnel avec confiance.
+              Helping ENSAM Meknès students discover their ideal engineering
+              department and build their professional project with confidence.
             </p>
             <p className="text-white/30 text-xs mt-4">
-              École Nationale Supérieure d&apos;Arts et Métiers — Meknès, Maroc
+              École Nationale Supérieure d&apos;Arts et Métiers — Meknès, Morocco
             </p>
           </div>
 
           {/* Navigation */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wide">
-              Explorer
+              Explore
             </h4>
             <ul className="space-y-2.5">
               {[
-                { href: "/", label: "Accueil" },
-                { href: "/departments", label: "Les Filières" },
-                { href: "/careers", label: "Débouchés & Carrières" },
-                { href: "/game", label: "Test d'Orientation" },
+                { href: "/", label: "Home" },
+                { href: "/departments", label: "Departments" },
+                { href: "/careers", label: "Careers & Opportunities" },
+                { href: "/game", label: "Orientation Test" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link
@@ -49,19 +49,19 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Filières */}
+          {/* Departments */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-wide">
-              Filières
+              Departments
             </h4>
             <ul className="space-y-2.5">
               {[
-                { href: "/departments/ai", label: "IA Engineering" },
+                { href: "/departments/ai", label: "AI Engineering" },
                 { href: "/departments/it", label: "IT Engineering" },
-                { href: "/departments/iot-industry40", label: "IoT & Industrie 4.0" },
-                { href: "/departments/energy", label: "Génie Énergétique" },
-                { href: "/departments/materials-mechanical", label: "Génie Mécanique" },
-                { href: "/departments/civil", label: "Génie Civil" },
+                { href: "/departments/iot-industry40", label: "Electro Digitalisation" },
+                { href: "/departments/energy", label: "Energy Engineering" },
+                { href: "/departments/materials-mechanical", label: "Materials & Mech" },
+                { href: "/departments/civil", label: "Civil Engineering" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link
@@ -78,9 +78,9 @@ export default function Footer() {
 
         <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/30 text-xs">
-            © {new Date().getFullYear()} ENSAM Meknès — Plateforme d&apos;Orientation Étudiante
+            © {new Date().getFullYear()} ENSAM Meknès — Student Orientation Platform
           </p>
-          <p className="text-white/30 text-xs">Projet SGRP52</p>
+          <p className="text-white/30 text-xs">Project SGRP52</p>
         </div>
       </div>
     </footer>

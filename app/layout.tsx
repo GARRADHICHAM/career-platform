@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Career Orientation Game — ENSAM",
-  description: "Interactive web game to help ENSAM students choose the right engineering department",
+  title: "Career Orientation — ENSAM Meknès",
+  description: "Interactive orientation platform to help ENSAM Meknès students discover and choose the right engineering department",
 };
 
 export default function RootLayout({

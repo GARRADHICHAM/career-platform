@@ -8,7 +8,7 @@ import { departments } from "@/lib/questions";
 import { departmentDetails } from "@/lib/departmentData";
 import { useAuth } from "@/context/AuthContext";
 
-const sectors = ["Tous", "Industrie", "Tech & Numérique", "Énergie", "Conseil", "BTP", "Recherche"];
+const sectors = ["All", "Industry", "Tech & Digital", "Energy", "Consulting", "Construction", "Research"];
 
 const allCareers = departments.flatMap((dept) => {
   const detail = departmentDetails[dept.id];
@@ -26,19 +26,19 @@ const allCareers = departments.flatMap((dept) => {
 
 export default function CareersPage() {
   const { user } = useAuth();
-  const [activeSector, setActiveSector] = useState("Tous");
+  const [activeSector, setActiveSector] = useState("All");
   const [search, setSearch] = useState("");
 
   const filtered = allCareers.filter((c) => {
+    const s = c.sector.toLowerCase();
     const matchSector =
-      activeSector === "Tous" ||
-      c.sector.toLowerCase().includes(activeSector.toLowerCase()) ||
-      (activeSector === "Tech & Numérique" && (c.sector.includes("Tech") || c.sector.includes("ESN") || c.sector.includes("Numérique") || c.sector.includes("FinTech"))) ||
-      (activeSector === "Industrie" && (c.sector.includes("Industrie") || c.sector.includes("Automobile") || c.sector.includes("Aéronautique") || c.sector.includes("Manufacturing"))) ||
-      (activeSector === "Énergie" && (c.sector.includes("ONEE") || c.sector.includes("Énergie") || c.sector.includes("ENR") || c.sector.includes("Utilities"))) ||
-      (activeSector === "Conseil" && c.sector.includes("Conseil")) ||
-      (activeSector === "BTP" && (c.sector.includes("BTP") || c.sector.includes("Construction") || c.sector.includes("Travaux"))) ||
-      (activeSector === "Recherche" && c.sector.includes("recherche"));
+      activeSector === "All" ||
+      (activeSector === "Industry" && (s.includes("industry") || s.includes("automotive") || s.includes("aerospace") || s.includes("manufacturing"))) ||
+      (activeSector === "Tech & Digital" && (s.includes("tech") || s.includes("it services") || s.includes("digital") || s.includes("fintech") || s.includes("startups"))) ||
+      (activeSector === "Energy" && (s.includes("energy") || s.includes("onee") || s.includes("utilities") || s.includes("renewables"))) ||
+      (activeSector === "Consulting" && s.includes("consulting")) ||
+      (activeSector === "Construction" && (s.includes("construction") || s.includes("public works") || s.includes("design offices"))) ||
+      (activeSector === "Research" && s.includes("research"));
     const matchSearch = search === "" || c.title.toLowerCase().includes(search.toLowerCase()) || c.deptName.toLowerCase().includes(search.toLowerCase());
     return matchSector && matchSearch;
   });
@@ -50,13 +50,13 @@ export default function CareersPage() {
       {/* Hero */}
       <section className="bg-slate-900 pt-28 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="text-amber-400 text-sm font-bold uppercase tracking-widest">Débouchés</span>
+          <span className="text-amber-400 text-sm font-bold uppercase tracking-widest">Careers</span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white mt-3 mb-4">
-            Toutes les carrières ENSAM
+            All ENSAM Careers
           </h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto mb-8">
-            {allCareers.length} métiers répertoriés dans 8 filières — explore, filtre, et trouve
-            ton futur poste.
+            {allCareers.length} careers listed across 10 departments — explore, filter, and find
+            your future role.
           </p>
 
           {/* Search */}
@@ -68,7 +68,7 @@ export default function CareersPage() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Rechercher un métier ou une filière..."
+              placeholder="Search for a career or department..."
               className="w-full bg-white/10 border border-white/20 text-white placeholder-white/30 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:border-amber-400 transition-colors"
             />
           </div>
@@ -98,7 +98,7 @@ export default function CareersPage() {
       <section className="bg-slate-50 py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <p className="text-slate-400 text-sm mb-6">
-            {filtered.length} métier{filtered.length > 1 ? "s" : ""} trouvé{filtered.length > 1 ? "s" : ""}
+            {filtered.length} career{filtered.length !== 1 ? "s" : ""} found
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {filtered.map((career, i) => (
@@ -121,11 +121,11 @@ export default function CareersPage() {
 
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-400 text-xs">🏢 Secteur:</span>
+                    <span className="text-slate-400 text-xs">🏢 Sector:</span>
                     <span className="text-slate-600 text-xs font-medium">{career.sector}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-400 text-xs">💰 Salaire:</span>
+                    <span className="text-slate-400 text-xs">💰 Salary:</span>
                     <span className="text-slate-800 text-xs font-bold">{career.salary}</span>
                   </div>
                 </div>
@@ -134,7 +134,7 @@ export default function CareersPage() {
                   href={`/departments/${career.deptId}`}
                   className={`block text-center text-xs font-semibold py-2 rounded-xl border ${career.deptBg} ${career.deptColor} border-current hover:opacity-80 transition-opacity`}
                 >
-                  Voir la filière →
+                  View department →
                 </Link>
               </div>
             ))}
@@ -142,12 +142,12 @@ export default function CareersPage() {
             {filtered.length === 0 && (
               <div className="sm:col-span-2 lg:col-span-3 text-center py-20">
                 <p className="text-4xl mb-4">🔍</p>
-                <p className="text-slate-500">Aucun métier trouvé pour ces critères.</p>
+                <p className="text-slate-500">No careers found for these criteria.</p>
                 <button
-                  onClick={() => { setSearch(""); setActiveSector("Tous"); }}
+                  onClick={() => { setSearch(""); setActiveSector("All"); }}
                   className="text-indigo-600 underline text-sm mt-2"
                 >
-                  Réinitialiser les filtres
+                  Reset filters
                 </button>
               </div>
             )}
@@ -159,7 +159,7 @@ export default function CareersPage() {
       <section className="bg-white py-16 px-4 border-t border-slate-100">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-8 text-center">
-            💰 Salaires moyens par filière
+            💰 Average salaries by department
           </h2>
           <div className="space-y-4">
             {departments.map((dept) => {
@@ -188,24 +188,24 @@ export default function CareersPage() {
             })}
           </div>
           <p className="text-slate-400 text-xs text-center mt-6">
-            * Salaires indicatifs pour jeunes diplômés au Maroc — varient selon l&apos;entreprise et la région.
+            * Indicative salaries for recent graduates in Morocco — vary by company and region.
           </p>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-gradient-to-r from-slate-900 to-indigo-900 py-14 px-4 text-center">
+      <section className="bg-linear-to-r from-slate-900 to-indigo-900 py-14 px-4 text-center">
         <h3 className="text-2xl font-extrabold text-white mb-3">
-          Quel métier te correspond vraiment ?
+          Which career really fits you?
         </h3>
         <p className="text-white/60 text-sm mb-6 max-w-md mx-auto">
-          Notre test d&apos;orientation analyse tes affinités et te recommande les filières — et donc les carrières — qui te correspondent.
+          Our orientation test analyzes your affinities and recommends the departments — and therefore the careers — that suit you best.
         </p>
         <Link
           href={user ? "/game" : "/login"}
           className="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-7 py-3.5 rounded-xl text-sm transition-all hover:shadow-lg"
         >
-          🎯 Passer le test maintenant
+          🎯 Take the test now
         </Link>
       </section>
 

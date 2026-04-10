@@ -7,32 +7,32 @@ import Footer from "@/components/Footer";
 import { departments } from "@/lib/questions";
 
 const stats = [
-  { value: "65+", label: "Années d'excellence" },
-  { value: "8", label: "Filières d'ingénierie" },
-  { value: "5 000+", label: "Ingénieurs formés" },
-  { value: "96%", label: "Taux d'insertion" },
+  { value: "65+", label: "Years of excellence" },
+  { value: "10", label: "Engineering departments" },
+  { value: "5 000+", label: "Engineers trained" },
+  { value: "96%", label: "Employment rate" },
 ];
 
 const whyEnsam = [
   {
     icon: "🏆",
-    title: "Excellence académique",
-    desc: "Membre du réseau Arts et Métiers ParisTech, l'ENSAM Meknès est l'une des grandes écoles d'ingénieurs les plus reconnues du Maroc.",
+    title: "Academic Excellence",
+    desc: "A member of the Arts et Métiers ParisTech network, ENSAM Meknès is one of the most recognized engineering schools in Morocco.",
   },
   {
     icon: "🤝",
-    title: "Partenariats industriels",
-    desc: "Des partenariats solides avec Renault, Boeing, OCP, Schneider Electric et des dizaines d'entreprises nationales et internationales.",
+    title: "Industry Partnerships",
+    desc: "Strong partnerships with Renault, Boeing, OCP, Schneider Electric and dozens of national and international companies.",
   },
   {
     icon: "🌍",
-    title: "Ouverture internationale",
-    desc: "Programmes d'échanges avec des universités européennes, stages à l'étranger et double-diplôme pour les meilleurs étudiants.",
+    title: "International Openness",
+    desc: "Exchange programs with European universities, international internships, and double-degree opportunities for top students.",
   },
   {
     icon: "🔬",
-    title: "Recherche & Innovation",
-    desc: "Des laboratoires de recherche actifs dans les domaines des matériaux, de l'énergie, de l'IA et de l'industrie 4.0.",
+    title: "Research & Innovation",
+    desc: "Active research laboratories in materials, energy, AI, and Industry 4.0.",
   },
 ];
 
@@ -47,9 +47,9 @@ export default function Home() {
       <section className="relative min-h-screen bg-slate-900 flex items-center overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-900/20 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -right-40 w-150 h-150 bg-indigo-600/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-125 h-125 bg-amber-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-purple-900/20 rounded-full blur-3xl" />
         </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-16">
@@ -57,21 +57,20 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/30 rounded-full px-4 py-1.5 mb-6">
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
               <span className="text-amber-400 text-xs font-semibold tracking-wide uppercase">
-                Plateforme d&apos;orientation officielle — ENSAM Meknès
+                Official Orientation Platform — ENSAM Meknès
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-              Construis ton avenir
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-400">
-                d&apos;ingénieur à ENSAM
+              Build your engineering
+              <span className="block text-transparent bg-clip-text bg-linear-to-r from-amber-400 to-orange-400">
+                future at ENSAM
               </span>
             </h1>
 
             <p className="text-white/60 text-lg leading-relaxed mb-10 max-w-xl">
-              Découvre les 8 filières d&apos;ingénierie de l&apos;ENSAM Meknès, explore les
-              débouchés professionnels, et utilise notre test interactif pour trouver
-              le domaine qui te correspond le mieux.
+              Discover the 10 engineering departments of ENSAM Meknès, explore career
+              paths, and use our interactive test to find the field that suits you best.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -79,13 +78,13 @@ export default function Home() {
                 href="/departments"
                 className="inline-flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-7 py-3.5 rounded-xl text-base transition-all hover:shadow-xl hover:shadow-amber-400/25 hover:scale-105"
               >
-                Explorer les filières →
+                Explore Departments →
               </Link>
               <Link
                 href={user ? "/game" : "/login"}
                 className="inline-flex items-center justify-center gap-2 border-2 border-white/20 hover:border-white/40 text-white font-semibold px-7 py-3.5 rounded-xl text-base transition-all hover:bg-white/10"
               >
-                🎯 Test d&apos;orientation
+                🎯 Orientation Test
               </Link>
             </div>
           </div>
@@ -93,7 +92,7 @@ export default function Home() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30">
-          <span className="text-xs font-medium">Découvrir</span>
+          <span className="text-xs font-medium">Scroll</span>
           <div className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center p-1">
             <div className="w-1 h-2 bg-white/40 rounded-full animate-bounce" />
           </div>
@@ -119,25 +118,24 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-amber-500 text-sm font-bold uppercase tracking-widest">À propos</span>
+              <span className="text-amber-500 text-sm font-bold uppercase tracking-widest">About</span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 mb-6 leading-tight">
-                L&apos;excellence au service de l&apos;ingénierie marocaine
+                Excellence at the service of Moroccan engineering
               </h2>
               <p className="text-slate-600 leading-relaxed mb-4">
-                Fondée en 1959, l&apos;École Nationale Supérieure d&apos;Arts et Métiers de Meknès
-                fait partie du prestigieux réseau Arts et Métiers ParisTech. Elle forme
-                des ingénieurs polyvalents, capables de relever les défis technologiques
-                du Maroc et du monde entier.
+                Founded in 1959, the École Nationale Supérieure d&apos;Arts et Métiers de Meknès
+                is part of the prestigious Arts et Métiers ParisTech network. It trains
+                versatile engineers capable of meeting the technological challenges
+                of Morocco and the world.
               </p>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Avec un cycle de formation de 5 ans (2 ans de classes préparatoires + 3 ans
-                d&apos;école d&apos;ingénieurs), l&apos;ENSAM Meknès offre 8 spécialisations couvrant
-                les domaines les plus porteurs de l&apos;économie actuelle : de l&apos;intelligence
-                artificielle à l&apos;énergie renouvelable, en passant par l&apos;industrie 4.0 et
-                le génie civil.
+                With a 5-year training cycle (2 years of preparatory classes + 3 years of
+                engineering school), ENSAM Meknès offers 10 specializations covering
+                the most in-demand fields: from artificial intelligence to renewable energy,
+                Industry 4.0, and civil engineering.
               </p>
               <div className="flex flex-wrap gap-3">
-                {["Accréditée CTI", "Réseau Arts et Métiers", "ISO 9001", "Label EUR-ACE"].map((badge) => (
+                {["CTI Accredited", "Arts et Métiers Network", "ISO 9001", "EUR-ACE Label"].map((badge) => (
                   <span
                     key={badge}
                     className="bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-full"
@@ -151,10 +149,10 @@ export default function Home() {
             {/* Visual card */}
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "Taux d'insertion à 6 mois", value: "96%", icon: "📈", color: "bg-green-50 border-green-200" },
-                { label: "Salaire moyen débutant", value: "14 500 MAD", icon: "💼", color: "bg-blue-50 border-blue-200" },
-                { label: "Années d'excellence", value: "65+", icon: "🏛️", color: "bg-amber-50 border-amber-200" },
-                { label: "Partenaires industriels", value: "120+", icon: "🤝", color: "bg-purple-50 border-purple-200" },
+                { label: "Employment rate at 6 months", value: "96%", icon: "📈", color: "bg-green-50 border-green-200" },
+                { label: "Average starting salary", value: "14 500 MAD", icon: "💼", color: "bg-blue-50 border-blue-200" },
+                { label: "Years of excellence", value: "65+", icon: "🏛️", color: "bg-amber-50 border-amber-200" },
+                { label: "Industry partners", value: "120+", icon: "🤝", color: "bg-purple-50 border-purple-200" },
               ].map((item) => (
                 <div key={item.label} className={`border-2 ${item.color} rounded-2xl p-5 text-center`}>
                   <div className="text-3xl mb-2">{item.icon}</div>
@@ -171,12 +169,12 @@ export default function Home() {
       <section className="bg-slate-50 py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-amber-500 text-sm font-bold uppercase tracking-widest">Filières</span>
+            <span className="text-amber-500 text-sm font-bold uppercase tracking-widest">Departments</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">
-              8 spécialisations d&apos;avenir
+              10 specializations for the future
             </h2>
             <p className="text-slate-500 mt-3 max-w-xl mx-auto">
-              Chaque filière ouvre des portes sur des secteurs clés de l&apos;économie marocaine et internationale.
+              Each department opens doors to key sectors of the Moroccan and international economy.
             </p>
           </div>
 
@@ -191,7 +189,7 @@ export default function Home() {
                 <h3 className={`font-bold text-sm mb-2 ${dept.color}`}>{dept.shortName}</h3>
                 <p className="text-slate-500 text-xs leading-snug line-clamp-2">{dept.description}</p>
                 <p className={`text-xs font-semibold mt-3 ${dept.color} group-hover:underline`}>
-                  En savoir plus →
+                  Learn more →
                 </p>
               </Link>
             ))}
@@ -202,7 +200,7 @@ export default function Home() {
               href="/departments"
               className="inline-flex items-center gap-2 border-2 border-slate-300 hover:border-slate-400 text-slate-700 font-semibold px-6 py-3 rounded-xl text-sm transition-all hover:bg-slate-100"
             >
-              Voir toutes les filières →
+              View all departments →
             </Link>
           </div>
         </div>
@@ -212,31 +210,31 @@ export default function Home() {
       <section className="bg-white py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-amber-500 text-sm font-bold uppercase tracking-widest">Débouchés</span>
+            <span className="text-amber-500 text-sm font-bold uppercase tracking-widest">Career Paths</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2">
-              Des carrières à haute valeur ajoutée
+              High-value engineering careers
             </h2>
             <p className="text-slate-500 mt-3 max-w-xl mx-auto">
-              Les diplômés de l&apos;ENSAM Meknès intègrent des entreprises leaders au Maroc et à l&apos;international.
+              ENSAM Meknès graduates join leading companies in Morocco and internationally.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               {
-                sector: "Industrie & Automobile",
+                sector: "Industry & Automotive",
                 companies: ["Renault Maroc", "Boeing", "Safran", "Stellantis", "Yazaki"],
                 icon: "🏭",
                 color: "border-orange-200 bg-orange-50",
               },
               {
-                sector: "Tech & Numérique",
+                sector: "Tech & Digital",
                 companies: ["OCP Digital", "Capgemini", "IBM", "HPS", "CGI"],
                 icon: "💻",
                 color: "border-indigo-200 bg-indigo-50",
               },
               {
-                sector: "Énergie & Environnement",
+                sector: "Energy & Environment",
                 companies: ["ONEE", "Nareva", "Masen", "Total Energies", "EDF"],
                 icon: "⚡",
                 color: "border-green-200 bg-green-50",
@@ -262,7 +260,7 @@ export default function Home() {
               href="/careers"
               className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all"
             >
-              Explorer tous les débouchés →
+              Explore all career paths →
             </Link>
           </div>
         </div>
@@ -272,9 +270,9 @@ export default function Home() {
       <section className="bg-slate-900 py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-amber-400 text-sm font-bold uppercase tracking-widest">Pourquoi ENSAM</span>
+            <span className="text-amber-400 text-sm font-bold uppercase tracking-widest">Why ENSAM</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-2">
-              Une école, une vision
+              One school, one vision
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -290,29 +288,29 @@ export default function Home() {
       </section>
 
       {/* ── GAME CTA ── */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-700 py-20">
+      <section className="bg-linear-to-r from-indigo-600 to-purple-700 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="text-5xl mb-5">🎯</div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
-            Pas encore sûr de ta filière ?
+            Not sure which department fits you?
           </h2>
           <p className="text-white/70 text-lg mb-8 max-w-xl mx-auto">
-            Notre test d&apos;orientation interactif analyse tes affinités avec chaque domaine
-            et te recommande les 3 filières qui te correspondent le mieux.
+            Our interactive orientation test analyzes your affinity with each field
+            and recommends the 3 departments that suit you best.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href={user ? "/game" : "/login"}
               className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-8 py-4 rounded-2xl text-base transition-all hover:shadow-2xl hover:scale-105"
             >
-              Commencer le test gratuitement →
+              Start the test for free →
             </Link>
             <Link href="/departments" className="text-white/70 hover:text-white text-sm font-medium transition-colors">
-              ou explorer les filières d&apos;abord
+              or explore departments first
             </Link>
           </div>
           <p className="text-white/40 text-xs mt-6">
-            80 questions · 8 filières · Résultats instantanés · Gratuit
+            100 questions · 10 departments · Instant results · Free
           </p>
         </div>
       </section>

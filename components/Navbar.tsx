@@ -7,9 +7,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/departments", label: "Filières" },
-  { href: "/careers", label: "Carrières" },
+  { href: "/", label: "Home" },
+  { href: "/departments", label: "Departments" },
+  { href: "/careers", label: "Careers" },
 ];
 
 export default function Navbar() {
@@ -81,7 +81,7 @@ export default function Navbar() {
               href={user ? "/game" : "/login"}
               className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-sm px-4 py-2 rounded-lg transition-all hover:shadow-lg hover:scale-105"
             >
-              🎯 Test d&apos;Orientation
+              🎯 Orientation Test
             </Link>
 
             {user ? (
@@ -97,7 +97,7 @@ export default function Navbar() {
                       {initials}
                     </div>
                   )}
-                  <span className="text-white text-xs font-medium max-w-[80px] truncate">
+                  <span className="text-white text-xs font-medium max-w-20 truncate">
                     {user.displayName?.split(" ")[0] ?? user.email}
                   </span>
                 </button>
@@ -106,17 +106,17 @@ export default function Navbar() {
                     <div className="fixed inset-0 z-10" onClick={() => setDropdownOpen(false)} />
                     <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-xl z-20 overflow-hidden border border-gray-100">
                       <Link href="/game" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 font-medium">
-                        📊 Mon tableau de bord
+                        📊 My Dashboard
                       </Link>
                       <Link href="/results" className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 font-medium">
-                        🏆 Mes résultats
+                        🏆 My Results
                       </Link>
                       <hr className="border-gray-100" />
                       <button
                         onClick={handleSignOut}
                         className="w-full text-left px-4 py-3 text-sm text-red-500 hover:bg-red-50 font-medium"
                       >
-                        Déconnexion
+                        Sign Out
                       </button>
                     </div>
                   </>
@@ -127,7 +127,7 @@ export default function Navbar() {
                 href="/login"
                 className="text-white/80 hover:text-white text-sm font-medium transition-colors"
               >
-                Connexion
+                Sign In
               </Link>
             )}
           </div>
@@ -165,18 +165,18 @@ export default function Navbar() {
             href={user ? "/game" : "/login"}
             className="block bg-amber-400 text-slate-900 font-bold text-sm px-4 py-2.5 rounded-lg text-center mt-3"
           >
-            🎯 Test d&apos;Orientation
+            🎯 Orientation Test
           </Link>
           {user ? (
             <button
               onClick={handleSignOut}
               className="block w-full text-left px-4 py-2.5 text-sm text-red-400"
             >
-              Déconnexion
+              Sign Out
             </button>
           ) : (
             <Link href="/login" className="block px-4 py-2.5 text-sm text-white/70">
-              Connexion
+              Sign In
             </Link>
           )}
         </div>

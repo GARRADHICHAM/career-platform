@@ -17,13 +17,13 @@ export default function DepartmentsPage() {
       {/* Hero */}
       <section className="bg-slate-900 pt-28 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="text-amber-400 text-sm font-bold uppercase tracking-widest">Filières</span>
+          <span className="text-amber-400 text-sm font-bold uppercase tracking-widest">Departments</span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white mt-3 mb-4">
-            8 voies vers l&apos;excellence
+            10 paths to excellence
           </h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            Explore chaque spécialisation en détail — cours, compétences, carrières et entreprises
-            qui recrutent nos diplômés.
+            Explore each specialization in detail — courses, skills, careers, and
+            companies that hire our graduates.
           </p>
         </div>
       </section>
@@ -50,7 +50,7 @@ export default function DepartmentsPage() {
                     {detail && (
                       <div className="text-right shrink-0">
                         <p className="text-lg font-extrabold text-slate-800">{detail.employmentRate}</p>
-                        <p className="text-xs text-slate-400">insertion</p>
+                        <p className="text-xs text-slate-400">employment</p>
                       </div>
                     )}
                   </div>
@@ -61,7 +61,7 @@ export default function DepartmentsPage() {
                     <>
                       <div>
                         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                          Exemples de métiers
+                          Sample careers
                         </p>
                         <div className="flex flex-wrap gap-1.5">
                           {detail.careers.slice(0, 3).map((c) => (
@@ -80,13 +80,13 @@ export default function DepartmentsPage() {
                           href={`/departments/${dept.id}`}
                           className={`flex-1 py-2.5 rounded-xl text-sm font-bold text-center transition-all hover:opacity-90 ${dept.color} bg-white border-2 border-current hover:shadow-sm`}
                         >
-                          Découvrir la filière →
+                          Explore department →
                         </Link>
                         <Link
                           href={user ? `/game/${dept.id}` : "/login"}
                           className="py-2.5 px-4 rounded-xl text-sm font-semibold text-slate-500 border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-100 transition-all"
                         >
-                          🎯 Tester
+                          🎯 Test
                         </Link>
                       </div>
                     </>
@@ -101,16 +101,16 @@ export default function DepartmentsPage() {
       {/* CTA */}
       <section className="bg-white py-14 px-4 text-center border-t border-slate-100">
         <h3 className="text-xl font-extrabold text-slate-900 mb-3">
-          Tu hésites encore entre plusieurs filières ?
+          Still choosing between departments?
         </h3>
         <p className="text-slate-500 text-sm mb-6">
-          Notre test interactif analyse tes affinités et te recommande les 3 meilleures options.
+          Our interactive test analyzes your affinities and recommends the 3 best options for you.
         </p>
         <Link
           href={user ? "/game" : "/login"}
           className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-7 py-3.5 rounded-xl text-sm transition-all hover:shadow-lg"
         >
-          🎯 Passer le test d&apos;orientation
+          🎯 Take the orientation test
         </Link>
       </section>
 

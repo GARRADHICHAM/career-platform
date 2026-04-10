@@ -40,7 +40,7 @@ function GameMap() {
           {/* Overall progress */}
           <div className="flex-1 max-w-xs">
             <div className="flex justify-between text-xs text-white/40 mb-1">
-              <span>{completed.length} / {departments.length} filières</span>
+              <span>{completed.length} / {departments.length} departments</span>
               <span>{pct}%</span>
             </div>
             <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -60,15 +60,15 @@ function GameMap() {
         <div className="inline-flex items-center gap-2 bg-amber-400/10 border border-amber-400/20 rounded-full px-4 py-1.5 mb-5">
           <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
           <span className="text-amber-400 text-xs font-semibold tracking-wide uppercase">
-            Test d&apos;orientation ENSAM Meknès
+            ENSAM Meknès Orientation Test
           </span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">
-          Choisis une filière à explorer
+          Choose a department to explore
         </h1>
         <p className="text-white/40 text-sm max-w-md mx-auto">
-          Réponds à 10 questions par filière pour mesurer ton niveau d&apos;affinité.
-          Plus tu en complètes, plus ta recommandation sera précise.
+          Answer 10 questions per department to measure your affinity level.
+          The more you complete, the more precise your recommendation will be.
         </p>
       </div>
 
@@ -93,7 +93,7 @@ function GameMap() {
                 {/* Completed badge */}
                 {isDone && (
                   <div className="absolute top-3 right-3 bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide">
-                    ✓ Fait
+                    ✓ Done
                   </div>
                 )}
 
@@ -113,7 +113,7 @@ function GameMap() {
                 {isDone && score ? (
                   <div className="px-5 pb-5">
                     <div className="flex justify-between text-xs mb-1.5">
-                      <span className="text-white/40">Affinité</span>
+                      <span className="text-white/40">Affinity</span>
                       <span className="text-amber-400 font-bold">{score.percentage}%</span>
                     </div>
                     <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -123,13 +123,13 @@ function GameMap() {
                       />
                     </div>
                     <p className="text-white/30 text-[10px] mt-1.5">
-                      {score.score}/{score.total} réponses positives
+                      {score.score}/{score.total} positive answers
                     </p>
                   </div>
                 ) : (
                   <div className="px-5 pb-5">
                     <span className="text-white/30 text-xs font-semibold group-hover:text-amber-400 transition-colors">
-                      Commencer le quiz →
+                      Start quiz →
                     </span>
                   </div>
                 )}
@@ -150,15 +150,15 @@ function GameMap() {
             }`}
           >
             {allDone
-              ? "🏆 Voir mes résultats finaux"
+              ? "🏆 See my final results"
               : completed.length > 0
-              ? `📊 Voir mes résultats (${completed.length} filière${completed.length > 1 ? "s" : ""})`
-              : "Complète au moins une filière"}
+              ? `📊 See my results (${completed.length} department${completed.length > 1 ? "s" : ""})`
+              : "Complete at least one department"}
           </button>
 
           {completed.length > 0 && !allDone && (
             <p className="text-white/30 text-xs">
-              {departments.length - completed.length} filière{departments.length - completed.length > 1 ? "s" : ""} restante{departments.length - completed.length > 1 ? "s" : ""} — continue pour une meilleure recommandation
+              {departments.length - completed.length} department{departments.length - completed.length > 1 ? "s" : ""} remaining — keep going for a better recommendation
             </p>
           )}
         </div>

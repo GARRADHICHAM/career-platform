@@ -34,9 +34,9 @@ export default function DepartmentQuizPage() {
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
           <p className="text-4xl mb-4">🔍</p>
-          <p className="text-white/50">Filière introuvable.</p>
+          <p className="text-white/50">Department not found.</p>
           <Link href="/game" className="text-amber-400 underline mt-2 block text-sm">
-            ← Retour
+            ← Back
           </Link>
         </div>
       </div>
@@ -69,10 +69,10 @@ export default function DepartmentQuizPage() {
   const finalPct = Math.round((finalScore / totalQ) * 100);
 
   function getScoreLabel(pct: number) {
-    if (pct >= 80) return { text: "Excellente affinité", emoji: "🎉", color: "text-emerald-400" };
-    if (pct >= 60) return { text: "Bonne affinité", emoji: "👍", color: "text-amber-400" };
-    if (pct >= 40) return { text: "Affinité modérée", emoji: "🤔", color: "text-orange-400" };
-    return { text: "Affinité faible", emoji: "💡", color: "text-red-400" };
+    if (pct >= 80) return { text: "Excellent affinity", emoji: "🎉", color: "text-emerald-400" };
+    if (pct >= 60) return { text: "Good affinity", emoji: "👍", color: "text-amber-400" };
+    if (pct >= 40) return { text: "Moderate affinity", emoji: "🤔", color: "text-orange-400" };
+    return { text: "Low affinity", emoji: "💡", color: "text-red-400" };
   }
 
   /* ── INTRO ── */
@@ -83,7 +83,7 @@ export default function DepartmentQuizPage() {
         <div className="bg-slate-900 border-b border-white/10 px-4 py-3">
           <div className="max-w-2xl mx-auto flex items-center gap-3">
             <Link href="/game" className="text-white/40 hover:text-white transition-colors text-sm">
-              ← Retour
+              ← Back
             </Link>
             <span className="text-white/20 text-sm">/</span>
             <span className="text-white/60 text-sm font-medium">{department.shortName}</span>
@@ -109,21 +109,21 @@ export default function DepartmentQuizPage() {
                     <span className="text-lg">📋</span>
                     <div>
                       <p className="text-white text-sm font-semibold">{totalQ} questions</p>
-                      <p className="text-white/40 text-xs">Réponds Oui ou Non à chaque affirmation</p>
+                      <p className="text-white/40 text-xs">Answer Yes or No to each statement</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-lg">✅</span>
                     <div>
-                      <p className="text-white text-sm font-semibold">Réponse attendue : Oui</p>
-                      <p className="text-white/40 text-xs">Si tu es prêt(e) à étudier ce sujet, réponds Oui</p>
+                      <p className="text-white text-sm font-semibold">Expected answer: Yes</p>
+                      <p className="text-white/40 text-xs">If you are ready to study this topic, answer Yes</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-lg">📈</span>
                     <div>
-                      <p className="text-white text-sm font-semibold">Score = % de Oui</p>
-                      <p className="text-white/40 text-xs">Plus le score est élevé, plus cette filière te correspond</p>
+                      <p className="text-white text-sm font-semibold">Score = % of Yes answers</p>
+                      <p className="text-white/40 text-xs">The higher the score, the better this department fits you</p>
                     </div>
                   </div>
                 </div>
@@ -132,17 +132,17 @@ export default function DepartmentQuizPage() {
                   <div className="flex justify-center gap-6 mb-7">
                     <div className="text-center">
                       <p className="text-amber-400 text-lg font-extrabold">{detail.employmentRate}</p>
-                      <p className="text-white/30 text-xs">insertion</p>
+                      <p className="text-white/30 text-xs">employment</p>
                     </div>
                     <div className="w-px bg-white/10" />
                     <div className="text-center">
                       <p className="text-amber-400 text-lg font-extrabold">{detail.avgSalary}</p>
-                      <p className="text-white/30 text-xs">salaire débutant</p>
+                      <p className="text-white/30 text-xs">starting salary</p>
                     </div>
                     <div className="w-px bg-white/10" />
                     <div className="text-center">
                       <p className="text-amber-400 text-lg font-extrabold">{detail.careers.length}</p>
-                      <p className="text-white/30 text-xs">métiers</p>
+                      <p className="text-white/30 text-xs">career paths</p>
                     </div>
                   </div>
                 )}
@@ -151,13 +151,13 @@ export default function DepartmentQuizPage() {
                   onClick={() => setPhase("quiz")}
                   className="w-full bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold py-4 rounded-2xl text-base transition-all hover:shadow-xl hover:shadow-amber-400/20 hover:scale-[1.02]"
                 >
-                  Commencer le quiz →
+                  Start quiz →
                 </button>
                 <Link
                   href={`/departments/${department.id}`}
                   className="block mt-3 text-xs text-white/30 hover:text-white/60 transition-colors"
                 >
-                  En savoir plus sur cette filière ↗
+                  Learn more about this department ↗
                 </Link>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function DepartmentQuizPage() {
         <div className="bg-slate-900 border-b border-white/10 px-4 py-3">
           <div className="max-w-2xl mx-auto flex items-center gap-3">
             <Link href="/game" className="text-white/40 hover:text-white text-sm transition-colors">
-              ← Carte des filières
+              ← Department map
             </Link>
           </div>
         </div>
@@ -200,7 +200,7 @@ export default function DepartmentQuizPage() {
                     <span className="text-white/30 text-2xl">%</span>
                   </p>
                   <p className="text-white/40 text-sm mb-4">
-                    {finalScore} / {totalQ} réponses positives
+                    {finalScore} / {totalQ} positive answers
                   </p>
                   <div className="h-3 bg-white/10 rounded-full overflow-hidden">
                     <div
@@ -215,7 +215,7 @@ export default function DepartmentQuizPage() {
             {/* Answer review */}
             <div className="bg-slate-900 border border-white/10 rounded-2xl p-5">
               <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-3">
-                Récapitulatif
+                Summary
               </p>
               <div className="space-y-2">
                 {questions.map((q, i) => (
@@ -242,7 +242,7 @@ export default function DepartmentQuizPage() {
                 onClick={() => router.push("/game")}
                 className="flex-1 py-3 rounded-xl border border-white/10 text-white/60 font-semibold text-sm hover:bg-white/5 hover:text-white transition-all"
               >
-                ← Carte
+                ← Map
               </button>
               <button
                 onClick={() => {
@@ -253,13 +253,13 @@ export default function DepartmentQuizPage() {
                 }}
                 className="flex-1 py-3 rounded-xl border border-white/10 text-white/60 font-semibold text-sm hover:bg-white/5 hover:text-white transition-all"
               >
-                🔄 Refaire
+                🔄 Retake
               </button>
               <button
                 onClick={() => router.push("/results")}
                 className="flex-1 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-sm transition-all"
               >
-                Résultats →
+                Results →
               </button>
             </div>
           </div>
@@ -309,14 +309,14 @@ export default function DepartmentQuizPage() {
           {/* Question number pill */}
           <div className="text-center mb-6">
             <span className="bg-white/5 border border-white/10 text-white/40 text-xs font-semibold px-4 py-1.5 rounded-full">
-              Question {currentQ + 1} sur {totalQ}
+              Question {currentQ + 1} of {totalQ}
             </span>
           </div>
 
           {/* Question card */}
           <div className="bg-slate-900 border border-white/10 rounded-3xl p-8 mb-5">
             <p className="text-white text-xl sm:text-2xl font-bold leading-relaxed text-center">
-              {question.text.replace("Are you ready to", "Es-tu prêt(e) à")}
+              {question.text}
             </p>
           </div>
 
@@ -333,7 +333,7 @@ export default function DepartmentQuizPage() {
                   : "border-white/10 bg-white/5 text-white hover:border-red-400/50 hover:bg-red-500/10 hover:text-red-400 hover:scale-[1.03]"
               }`}
             >
-              ✗ Non
+              ✗ No
             </button>
             <button
               onClick={() => handleAnswer(true)}
@@ -346,14 +346,14 @@ export default function DepartmentQuizPage() {
                   : "border-white/10 bg-white/5 text-white hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:text-emerald-400 hover:scale-[1.03]"
               }`}
             >
-              ✓ Oui
+              ✓ Yes
             </button>
           </div>
 
           {/* Live tally */}
           {answers.length > 0 && (
             <p className="text-center text-white/20 text-xs mt-5">
-              {answers.filter(Boolean).length} Oui sur {answers.length} répondu{answers.length > 1 ? "es" : "e"}
+              {answers.filter(Boolean).length} Yes out of {answers.length} answered
             </p>
           )}
         </div>

@@ -61,7 +61,6 @@ function ResultsDashboard() {
     .sort((a, b) => b.percentage - a.percentage);
 
   const top3 = ranked.slice(0, 3);
-  const rest = ranked.slice(3);
   const completedCount = ranked.length;
   const totalCount = departments.length;
 
@@ -85,7 +84,7 @@ function ResultsDashboard() {
         <div className="bg-slate-900 border-b border-white/10 px-4 py-3">
           <div className="max-w-4xl mx-auto flex items-center justify-between">
             <Link href="/game" className="text-white/40 hover:text-white text-sm transition-colors">
-              ← Retour
+              ← Back
             </Link>
             <UserMenu />
           </div>
@@ -93,15 +92,15 @@ function ResultsDashboard() {
         <div className="flex-1 flex items-center justify-center p-6">
           <div className="text-center max-w-sm">
             <div className="text-6xl mb-5">📭</div>
-            <h2 className="text-xl font-extrabold text-white mb-2">Aucun résultat</h2>
+            <h2 className="text-xl font-extrabold text-white mb-2">No results yet</h2>
             <p className="text-white/40 text-sm mb-8">
-              Tu dois compléter au moins une filière avant de voir tes résultats.
+              You need to complete at least one department before viewing your results.
             </p>
             <Link
               href="/game"
               className="inline-flex items-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3 rounded-xl text-sm transition-all"
             >
-              Aller à la carte des filières
+              Go to department map
             </Link>
           </div>
         </div>
@@ -120,9 +119,9 @@ function ResultsDashboard() {
       <div className="bg-slate-900 border-b border-white/10 px-4 py-3 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
           <Link href="/game" className="text-white/40 hover:text-white text-sm transition-colors flex items-center gap-1.5">
-            ← Carte
+            ← Map
           </Link>
-          <span className="text-white/50 text-sm font-medium hidden sm:block">Mes Résultats</span>
+          <span className="text-white/50 text-sm font-medium hidden sm:block">My Results</span>
           <UserMenu />
         </div>
       </div>
@@ -132,29 +131,29 @@ function ResultsDashboard() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="text-5xl mb-4">🏆</div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
-            Tes résultats d&apos;orientation
+            Your orientation results
           </h1>
           <p className="text-white/40 text-sm mb-6">
-            {completedCount} filière{completedCount > 1 ? "s" : ""} complétée{completedCount > 1 ? "s" : ""} sur {totalCount}
-            {completedCount < totalCount && ` — complète les ${totalCount - completedCount} restantes pour plus de précision`}
+            {completedCount} department{completedCount > 1 ? "s" : ""} completed out of {totalCount}
+            {completedCount < totalCount && ` — complete the ${totalCount - completedCount} remaining for more precision`}
           </p>
 
           {/* Summary pills */}
           <div className="flex flex-wrap justify-center gap-3">
             <div className="bg-white/5 border border-white/10 rounded-xl px-5 py-3">
               <p className="text-2xl font-extrabold text-amber-400">{overallScore}%</p>
-              <p className="text-white/30 text-xs">score moyen</p>
+              <p className="text-white/30 text-xs">average score</p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl px-5 py-3">
               <p className="text-2xl font-extrabold text-white">{completedCount}/{totalCount}</p>
-              <p className="text-white/30 text-xs">filières testées</p>
+              <p className="text-white/30 text-xs">departments tested</p>
             </div>
             {top3[0] && (
               <div className="bg-amber-400/10 border border-amber-400/30 rounded-xl px-5 py-3">
                 <p className="text-lg font-extrabold text-amber-400">
                   {top3[0].icon} {top3[0].shortName}
                 </p>
-                <p className="text-white/30 text-xs">meilleure affinité</p>
+                <p className="text-white/30 text-xs">best match</p>
               </div>
             )}
           </div>
@@ -167,7 +166,7 @@ function ResultsDashboard() {
         {top3.length > 0 && (
           <section>
             <h2 className="text-white/50 text-xs font-bold uppercase tracking-widest mb-4">
-              ⭐ Recommandations — Top {top3.length}
+              ⭐ Recommendations — Top {top3.length}
             </h2>
             <div className="space-y-3">
               {top3.map((dept, i) => {
@@ -190,7 +189,7 @@ function ResultsDashboard() {
                         <p className={`text-3xl font-extrabold ${i === 0 ? "text-amber-400" : "text-white"}`}>
                           {dept.percentage}%
                         </p>
-                        <p className="text-white/30 text-xs">{dept.score}/{dept.total} Oui</p>
+                        <p className="text-white/30 text-xs">{dept.score}/{dept.total} Yes</p>
                       </div>
                     </div>
 
@@ -221,13 +220,13 @@ function ResultsDashboard() {
                         href={`/departments/${dept.id}`}
                         className="flex-1 text-center py-2.5 rounded-xl border border-white/10 text-white/60 text-xs font-semibold hover:bg-white/5 hover:text-white transition-all"
                       >
-                        Découvrir la filière ↗
+                        Explore department ↗
                       </Link>
                       <Link
                         href={`/game/${dept.id}`}
                         className="flex-1 text-center py-2.5 rounded-xl border border-white/10 text-white/60 text-xs font-semibold hover:bg-white/5 hover:text-white transition-all"
                       >
-                        🔄 Refaire le quiz
+                        🔄 Retake quiz
                       </Link>
                     </div>
                   </div>
@@ -240,7 +239,7 @@ function ResultsDashboard() {
         {/* ALL SCORES bar chart */}
         <section className="bg-slate-900 border border-white/10 rounded-2xl p-6">
           <h2 className="text-white/50 text-xs font-bold uppercase tracking-widest mb-5">
-            📊 Toutes les filières
+            📊 All departments
           </h2>
           <div className="space-y-4">
             {ranked.map((dept, i) => (
@@ -275,7 +274,7 @@ function ResultsDashboard() {
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-center mb-1.5">
                       <span className="text-white/50 text-sm truncate">{dept.shortName}</span>
-                      <span className="text-white/30 text-xs shrink-0 ml-3">Non testé</span>
+                      <span className="text-white/30 text-xs shrink-0 ml-3">Not tested</span>
                     </div>
                     <div className="h-2 bg-white/5 rounded-full" />
                   </div>
@@ -291,18 +290,18 @@ function ResultsDashboard() {
               <span className="text-xl">💡</span>
               <div>
                 <p className="text-amber-400 font-semibold text-sm mb-1">
-                  Résultats partiels
+                  Partial results
                 </p>
                 <p className="text-white/50 text-xs leading-relaxed">
-                  Tu n&apos;as pas encore testé toutes les filières.
-                  Complète les <strong className="text-white/70">{totalCount - completedCount}</strong> filières
-                  restantes pour obtenir une recommandation plus précise.
+                  You haven&apos;t tested all departments yet.
+                  Complete the <strong className="text-white/70">{totalCount - completedCount}</strong> remaining
+                  departments to get a more precise recommendation.
                 </p>
                 <Link
                   href="/game"
                   className="inline-block mt-3 text-amber-400 text-xs font-semibold hover:underline"
                 >
-                  Continuer le test →
+                  Continue the test →
                 </Link>
               </div>
             </div>
@@ -315,7 +314,7 @@ function ResultsDashboard() {
             onClick={() => router.push("/game")}
             className="py-3.5 rounded-xl border border-white/10 text-white/60 font-semibold text-sm hover:bg-white/5 hover:text-white transition-all"
           >
-            ← Carte des filières
+            ← Department map
           </button>
           <button
             onClick={handleSave}
@@ -326,13 +325,13 @@ function ResultsDashboard() {
                 : "bg-slate-800 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white"
             }`}
           >
-            {saving ? "Enregistrement..." : saved ? "✓ Sauvegardé" : "💾 Sauvegarder"}
+            {saving ? "Saving..." : saved ? "✓ Saved" : "💾 Save"}
           </button>
           <button
             onClick={handleRestart}
             className="py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold text-sm transition-all hover:shadow-lg hover:shadow-amber-400/20"
           >
-            🔄 Recommencer
+            🔄 Restart
           </button>
         </div>
       </div>

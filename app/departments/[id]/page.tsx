@@ -22,9 +22,9 @@ export default function DepartmentDetailPage() {
         <div className="min-h-screen bg-slate-50 flex items-center justify-center">
           <div className="text-center">
             <p className="text-4xl mb-4">🔍</p>
-            <p className="text-slate-600">Filière introuvable.</p>
+            <p className="text-slate-600">Department not found.</p>
             <Link href="/departments" className="text-indigo-600 underline mt-2 block">
-              ← Retour aux filières
+              ← Back to departments
             </Link>
           </div>
         </div>
@@ -44,7 +44,7 @@ export default function DepartmentDetailPage() {
             href="/departments"
             className={`text-xs font-semibold ${dept.color} hover:underline mb-4 inline-block`}
           >
-            ← Toutes les filières
+            ← All departments
           </Link>
           <div className="flex items-start gap-5">
             <div className="text-6xl">{dept.icon}</div>
@@ -56,15 +56,15 @@ export default function DepartmentDetailPage() {
               <div className="flex flex-wrap gap-4 mt-4">
                 <div className="bg-white rounded-xl px-4 py-2 text-center shadow-sm">
                   <p className="text-lg font-extrabold text-slate-900">{detail.employmentRate}</p>
-                  <p className="text-xs text-slate-400">taux d&apos;insertion</p>
+                  <p className="text-xs text-slate-400">employment rate</p>
                 </div>
                 <div className="bg-white rounded-xl px-4 py-2 text-center shadow-sm">
                   <p className="text-lg font-extrabold text-slate-900">{detail.avgSalary}</p>
-                  <p className="text-xs text-slate-400">salaire moyen débutant</p>
+                  <p className="text-xs text-slate-400">avg. starting salary</p>
                 </div>
                 <div className="bg-white rounded-xl px-4 py-2 text-center shadow-sm">
-                  <p className="text-lg font-extrabold text-slate-900">3 ans</p>
-                  <p className="text-xs text-slate-400">durée de spécialisation</p>
+                  <p className="text-lg font-extrabold text-slate-900">3 years</p>
+                  <p className="text-xs text-slate-400">specialization duration</p>
                 </div>
               </div>
             </div>
@@ -81,13 +81,13 @@ export default function DepartmentDetailPage() {
 
             {/* Description */}
             <div className="bg-white rounded-2xl p-7 shadow-sm border border-slate-100">
-              <h2 className="text-lg font-extrabold text-slate-900 mb-3">À propos de cette filière</h2>
+              <h2 className="text-lg font-extrabold text-slate-900 mb-3">About this department</h2>
               <p className="text-slate-600 leading-relaxed">{detail.fullDescription}</p>
             </div>
 
             {/* Key courses */}
             <div className="bg-white rounded-2xl p-7 shadow-sm border border-slate-100">
-              <h2 className="text-lg font-extrabold text-slate-900 mb-4">📚 Cours clés</h2>
+              <h2 className="text-lg font-extrabold text-slate-900 mb-4">📚 Key Courses</h2>
               <div className="grid sm:grid-cols-2 gap-2">
                 {detail.keyCourses.map((course) => (
                   <div key={course} className="flex items-start gap-2 text-sm text-slate-700">
@@ -100,7 +100,7 @@ export default function DepartmentDetailPage() {
 
             {/* Skills */}
             <div className="bg-white rounded-2xl p-7 shadow-sm border border-slate-100">
-              <h2 className="text-lg font-extrabold text-slate-900 mb-4">🛠️ Compétences développées</h2>
+              <h2 className="text-lg font-extrabold text-slate-900 mb-4">🛠️ Skills Developed</h2>
               <div className="flex flex-wrap gap-2">
                 {detail.skills.map((skill) => (
                   <span
@@ -115,7 +115,7 @@ export default function DepartmentDetailPage() {
 
             {/* Careers */}
             <div className="bg-white rounded-2xl p-7 shadow-sm border border-slate-100">
-              <h2 className="text-lg font-extrabold text-slate-900 mb-4">💼 Débouchés & Carrières</h2>
+              <h2 className="text-lg font-extrabold text-slate-900 mb-4">💼 Career Paths</h2>
               <div className="space-y-3">
                 {detail.careers.map((career, i) => (
                   <div
@@ -145,7 +145,7 @@ export default function DepartmentDetailPage() {
 
             {/* Companies */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-              <h3 className="font-extrabold text-slate-900 text-sm mb-4">🏢 Entreprises qui recrutent</h3>
+              <h3 className="font-extrabold text-slate-900 text-sm mb-4">🏢 Hiring Companies</h3>
               <ul className="space-y-2">
                 {detail.companies.map((company) => (
                   <li key={company} className="flex items-center gap-2 text-sm text-slate-600">
@@ -160,25 +160,25 @@ export default function DepartmentDetailPage() {
             <div className="bg-slate-900 rounded-2xl p-6 text-center">
               <div className="text-3xl mb-3">{dept.icon}</div>
               <p className="text-white font-bold text-sm mb-2">
-                Cette filière te correspond ?
+                Does this department fit you?
               </p>
               <p className="text-white/50 text-xs mb-4">
-                Passe le quiz pour mesurer ton niveau d&apos;affinité avec ce domaine.
+                Take the quiz to measure your affinity level with this field.
               </p>
               <Link
                 href={user ? `/game/${dept.id}` : "/login"}
                 className="block bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold py-3 rounded-xl text-sm transition-all hover:shadow-lg"
               >
-                🎯 Tester cette filière
+                🎯 Test this department
               </Link>
               {!user && (
-                <p className="text-white/30 text-xs mt-2">Connexion requise</p>
+                <p className="text-white/30 text-xs mt-2">Login required</p>
               )}
             </div>
 
             {/* Other departments */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-              <h3 className="font-extrabold text-slate-900 text-sm mb-4">Autres filières</h3>
+              <h3 className="font-extrabold text-slate-900 text-sm mb-4">Other departments</h3>
               <div className="space-y-2">
                 {departments
                   .filter((d) => d.id !== dept.id)
@@ -199,7 +199,7 @@ export default function DepartmentDetailPage() {
                   href="/departments"
                   className="block text-xs text-slate-400 hover:text-slate-600 text-center mt-2 underline"
                 >
-                  Voir toutes →
+                  See all →
                 </Link>
               </div>
             </div>
